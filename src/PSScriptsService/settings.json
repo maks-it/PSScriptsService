@@ -1,0 +1,10 @@
+{
+  "ServiceName": "PSScriptsService",
+  "Description": "Windows service, which allows you to invoke PowerShell Scripts",
+  "DisplayName": "PowerShell Scripts Service",
+  "LogPath": "",
+  "LogSize": "20",
+  "ScriptsPath": "",
+  "TargetScript": "",
+  "SignedScripts": true
+}
