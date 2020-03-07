@@ -10,7 +10,7 @@ This project has an aim to allow **System Administrators** and also to who **Thi
 
 When you **install** and then **start** this **Windows Service**, it scans default folder in its root **PowerShellScripts**, then serches for default script **StartScript.ps1** in parent directories:
 
-```bash
+```
     .
     ├── ...
     ├── PowerShellScripts
@@ -62,7 +62,7 @@ Every script is launched in its **own thread**, so if one crashes, others are ab
        └── ...
 ```
 
-> I have set to execute only **signed** scrips by default, but if you don't care about your environment security, it's possible to launch them in **unrestricted** mode.
+> It's set to execute only **signed** scrips by default, but if you don't care about your environment security, it's possible to launch them in **unrestricted** mode.
 >
 > Continue to read to see other possible settings...
 
@@ -72,14 +72,14 @@ Here are all currently available customizations, managed into handy json file:
 
 ```json
     {
-    "ServiceName": "PSScriptsService",
-    "Description": "Windows service, which allows you to invoke PowerShell Scripts",
-    "DisplayName": "PowerShell Scripts Service",
-    "LogPath": "",
-    "LogSize": "20",
-    "ScriptsPath": "",
-    "TargetScript": "",
-    "SignedScripts": true
+        "ServiceName": "PSScriptsService",
+        "Description": "Windows service, which allows you to invoke PowerShell Scripts",
+        "DisplayName": "PowerShell Scripts Service",
+        "LogPath": "",
+        "LogSize": "20",
+        "ScriptsPath": "",
+        "TargetScript": "",
+        "SignedScripts": true
     }
 ```
 
@@ -98,7 +98,7 @@ You can create multiple services just create another service root folder and set
 
 ## Install and Uninstall Power Shell Scripts Service
 
-I have prepared 2 *.cmd files to simplify service system integration:
+I have prepared 2 ***.cmd** files to simplify service system integration:
 
 Install.cmd
 
@@ -119,3 +119,19 @@ Uninstall.cmd
 >These ***.cmd** files have to be launched with **Admin** privileges.
 
 After installation you have to start your newly created windows service: Win+R -> services.msc -> Enter -> Search by DisplayName.
+
+## Real World usage examples
+
+### Run React js and .Net Core WebApi on Windows Server
+
+One of the possible usages of this solution is to run **Node js Express** **(React js Prerendering Server)** and **.Net Core WebApi** on windows machines.
+
+StartScript.ps1
+
+```powershell
+    Start-Process -FilePath "npm" -Args "run-script webpack_prod" -WorkingDirectory "C:\source\repos\SomeProject\code\frontend" -NoNewWindow -Wait
+    Start-Process -FilePath "npm" -Args "run-script start" -WorkingDirectory "C:\source\repos\SomeProject\code\frontend" -NoNewWindow
+    Start-Process -FilePath "dotnet" -Args "run --configuration Release --project C:\source\repos\SomeProject\code\backend\SomeProject.csproj" -NoNewWindow
+```
+
+This simple script will be launched in **Power Shell Scripts Service** context, build and start you frontend **npm bundle** and backend **WebApi**.
