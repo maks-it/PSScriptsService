@@ -1,5 +1,7 @@
 # Power Shell Scripts Service
 
+> Deprecated version! Please see renewed program [Unified Scheduler Service](https://github.com/MAKS-IT-COM/uscheduler)
+
 This project has an aim to allow **System Administrators** and also to who **Thinks to be System Administrator** to launch **Power Shell** scripts as **Windows Service**.
 
 ## Latest builds
